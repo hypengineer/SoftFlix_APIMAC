@@ -1,0 +1,38 @@
+﻿@model SoftFlix.FrontEnd.Models.RegisterResponseModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+
+    @{
+        if (TempData["errorMessage"] != null)
+        {
+            <p style="color:red">
+                @TempData["errorMessage"]?.ToString()
+            </p>
+        }
+    }
+    <form asp-action="Register" asp-controller="Users" method="post">
+        <label>UserName</label>
+        <input type="text" asp-for="@Model.UserName" />
+        <label>Password</label>
+        <input type="text" asp-for="@Model.Password" />
+        <label>Email</label>
+        <input type="email" asp-for="@Model.EmailAddress" />
+        <label>BirtDate</label>
+        <input type="date" asp-for="@Model.BirthDate" />
+        <label>Phone Number</label>
+        <input type="text" asp-for="@Model.PhoneNumber" />
+        <label>Name</label>
+        <input type="text" asp-for="@Model.Name" />
+
+        <div>
+            <a asp-action="Index" asp-asp-controller="Categories">Geri Dön</a>
+            <button type="submit">Register </button>
+        </div>
+    </form>
+
+</body>
+</html>

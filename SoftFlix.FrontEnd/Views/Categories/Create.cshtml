@@ -1,0 +1,28 @@
+﻿@model SoftFlix.FrontEnd.Models.CategoryResponseModel
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Create Category</title>
+    </head>
+    <body>
+
+    @{
+        if (TempData["errorMessage"] != null)
+        {
+            <p style="color:red">
+            @TempData["errorMessage"]?.ToString()
+            </p>
+        }
+        }
+        <form asp-action="Create" asp-controller="Categories" method="post">
+            <label>Category Name</label>
+            <input type="text" asp-for="@Model.Name" />
+
+            <div>
+                <a asp-action="Index" asp-asp-controller="Categories">Geri Dön</a>
+                <button type="submit">Create </button>
+            </div>
+        </form>
+    
+    </body>
+    </html>

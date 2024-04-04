@@ -1,0 +1,36 @@
+﻿
+@model List<SoftFlix.FrontEnd.Models.PlanResponseModel>
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>UserPlans</title>
+    </head>
+    <body>
+        <p>Plans</p>
+
+
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+
+        @foreach(var plan in Model)
+        {
+            <tr>
+                <td>@plan.Id</td>
+                <td>@plan.Name</td>
+                <td>
+                    <form asp-action="Create" asp-controller="UserPlans" method="post">
+                        <input type="hidden" name="planId" value="@plan.Id" />
+                        <button type="submit">Assign Plan</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    
+</table>
+    
+    </body>
+    </html>

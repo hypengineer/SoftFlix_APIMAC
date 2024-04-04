@@ -1,0 +1,30 @@
+﻿@model SoftFlix.FrontEnd.Models.LoginResponseModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Category</title>
+</head>
+<body>
+
+    @{
+        if (TempData["errorMessage"] != null)
+        {
+            <p style="color:red">
+                @TempData["errorMessage"]?.ToString()
+            </p>
+        }
+    }
+    <form asp-action="Login" asp-controller="Users" method="post">
+        <label>UserName</label>
+        <input type="text" asp-for="@Model.UserName" />
+        <label>UserName</label>
+        <input type="text" asp-for="@Model.Password" />
+
+        <div>
+            <a asp-action="Index" asp-asp-controller="Categories">Geri Dön</a>
+            <button type="submit">Login </button>
+        </div>
+    </form>
+
+</body>
+</html>

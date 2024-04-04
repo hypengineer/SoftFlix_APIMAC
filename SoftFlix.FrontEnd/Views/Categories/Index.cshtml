@@ -1,0 +1,31 @@
+﻿
+@model List<SoftFlix.FrontEnd.Models.CategoryResponseModel>
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Categories</title>
+    </head>
+    <body>
+        <p>Categories</p>
+        <a asp-action="Create" asp-controller="Categories">Create Category</a>
+
+        <p>@ViewBag.ResponseMessage</p>
+
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+
+        @foreach(var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+            </tr>
+        }
+    
+</table>
+    
+    </body>
+    </html>
