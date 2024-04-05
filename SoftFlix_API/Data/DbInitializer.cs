@@ -12,6 +12,7 @@ namespace SoftFlix_API.Data
             SoftFlixRole identityRole;
             Restriction restriction;
             SoftFlixUser user;
+            Plan plan = null;
             Category? category = null;
             if (context != null)
             {
@@ -59,6 +60,26 @@ namespace SoftFlix_API.Data
                     category = new Category();
                     category.Name = "Fantastik";
                     context.Categories.Add(category);
+                    context.SaveChanges();
+                }
+
+                if (context.Plans.Count() == 0)
+                {
+                    plan = new Plan();
+                    plan.Name = "Çocuk";
+                    plan.Price = 50;
+                    plan.Resolution = "1080";
+                    context.Plans.Add(plan);
+                    plan = new Plan();
+                    plan.Name = "Yetişkin";
+                    plan.Price = 100;
+                    plan.Resolution = "1040";
+                    context.Plans.Add(plan);
+                    plan = new Plan();
+                    plan.Name = "Pro";
+                    plan.Price = 200;
+                    plan.Resolution = "3080";
+                    context.Plans.Add(plan);
                     context.SaveChanges();
                 }
 

@@ -1,31 +1,52 @@
 ﻿
 @model List<SoftFlix.FrontEnd.Models.CategoryResponseModel>
-<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Categories</title>
-    </head>
-    <body>
-        <p>Categories</p>
-        <a asp-action="Create" asp-controller="Categories">Create Category</a>
+<div>
+    <div class="card">
+        <div class="card-header  text-white bg-success bg-gradient">
+            <span class="fs-4">Category List</span>
+            <a asp-controller="Categories" asp-action="Create" class="btn btn-warning ms-2">Create Category</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
 
-        <p>@ViewBag.ResponseMessage</p>
+                        <th>ID</th>
+                        <th>Category Name</th>
+                        <th>İşlemler</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
 
-        <table>
-            <tr>
-            <th>Id</th>
-            <th>Name</th>
-        </tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
 
-        @foreach(var category in Model)
-        {
-            <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
-            </tr>
-        }
-    
-</table>
-    
-    </body>
-    </html>
+
+                            
+                            <td>
+                                <div class="w-75 btn-group" role="group">
+                                    <a asp-controller="Categories" asp-action="Update" asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                                        <i class="bi bi-pencil-square"> </i>Update
+                                    </a>
+
+                                    <a asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

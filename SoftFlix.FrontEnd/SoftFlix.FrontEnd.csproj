@@ -13,8 +13,10 @@
 
   <ItemGroup>
     <None Remove="Views\UserPlans\" />
+    <None Remove="Views\Medias\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\UserPlans\" />
+    <Folder Include="Views\Medias\" />
   </ItemGroup>
 </Project>

@@ -1,18 +1,19 @@
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SoftFlix.FrontEnd.Models;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace SoftFlix.FrontEnd.Controllers
 {
-    public class UserPlansController : Controller
+    public class MediasController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public UserPlansController(IHttpClientFactory httpClientFactory)
+        public MediasController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -20,12 +21,12 @@ namespace SoftFlix.FrontEnd.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7133/api/Plans");
+            var responseMessage = await client.GetAsync("https://localhost:7133/api/Medias");
 
             if (responseMessage.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<PlanResponseModel>>(jsonData);
+                var result = JsonConvert.DeserializeObject<List<MediaResponseModel>>(jsonData);
                 return View(result);
             }
             else
@@ -35,29 +36,32 @@ namespace SoftFlix.FrontEnd.Controllers
 
         }
 
-        
+        public IActionResult Create()
+        {
+
+            return View();
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Create(short planId)
+        public async Task<IActionResult> Create(MediaResponseModel model)
         {
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(planId);
+            var jsonData = JsonConvert.SerializeObject(model);
 
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7133/api/UserPlans?planId="+planId.ToString(), null);
+            var responseMessage = await client.PostAsync("https://localhost:7133/api/Medias", content);
 
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index","Categories");
+                return RedirectToAction("Index");
             }
 
             else
             {
-
-                return RedirectToAction("Index");
+                TempData["errorMessage"] = $"Bir hata ile karşılaşıldı. Hata kodu : {(int)responseMessage.StatusCode}";
+                return View(model);
             }
 
         }
-
     }
 }

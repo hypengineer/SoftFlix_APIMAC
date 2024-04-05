@@ -1,0 +1,35 @@
+﻿
+@model List<SoftFlix.FrontEnd.Models.MediaResponseModel>
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Medias</title>
+    </head>
+    <body>
+        <p>Medias</p>
+        <a asp-action="Create" asp-controller="Medias">Create Media</a>
+
+        <p>@ViewBag.ResponseMessage</p>
+
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>IMDbRating</th>
+                <th>Passive</th>
+            </tr>
+
+        @foreach(var media in Model)
+        {
+            <tr>
+                <td>@media.Id</td>
+                <td>@media.Name</td>
+                <td>@media.IMDBRating</td>
+                <td>@media.Passive</td>
+            </tr>
+        }
+    
+</table>
+    
+    </body>
+    </html>

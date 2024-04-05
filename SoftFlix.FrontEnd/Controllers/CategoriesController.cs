@@ -59,6 +59,46 @@ namespace SoftFlix.FrontEnd.Controllers
                     return View(model); }
 
         }
+
+       public async Task<IActionResult> Update(short id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7133/api/Categories{id}");
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var data = JsonConvert.DeserializeObject<CategoryResponseModel>(jsonData);
+                return View(data);
+            }
+
+            else
+            {
+                return View(null);
+            }
+
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryResponseModel model)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(model);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PutAsync("https://localhost:7133/api/Categories",content);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+
         
     }
 }

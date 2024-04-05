@@ -14,11 +14,11 @@ namespace SoftFlix_API.Controllers
     [ApiController]
     public class MediasController : ControllerBase
     {
-        public struct MediaPostModel
-        {
-            public Media Media { get; set; }
-            public List<short> CatIds { get; set; }
-        }
+        //public struct MediaPostModel
+        //{
+        //    public Media Media { get; set; }
+        //    public List<short> CatIds { get; set; }
+        //}
         private readonly ApplicationDbContext _context;
 
         public MediasController(ApplicationDbContext context)
@@ -57,68 +57,54 @@ namespace SoftFlix_API.Controllers
 
         // PUT: api/Medias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMedia(int id, Media media)
+        [HttpPut]
+        //[Authorize(Roles = "ContentAdmin")]
+        public void PutCategory(Media media)
         {
-            if (id != media.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(media).State = EntityState.Modified;
+            _context.Medias.Update(media);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!MediaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
-
-            return NoContent();
         }
 
         // POST: api/Meidas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public ActionResult<Media> PostMedia([FromBody] MediaPostModel model, int dirId, int starId) // Categoryleri çoklu parametle olarak ekleyemediğimiz için ek bir viewmodel(MediaPostModel) oluşturduk.
+        public ActionResult<Media> PostMedia(Media model/*, int dirId, int starId*/) // Categoryleri çoklu parametle olarak ekleyemediğimiz için ek bir viewmodel(MediaPostModel) oluşturduk.
         {
-            Media media = model.Media;
-            List<short> catIds = model.CatIds;
+           // Media media = model.Media;
+            //List<short> catIds = model.CatIds;
 
-            MediaDirector mediaDirector = new MediaDirector();
-            MediaStar mediaStar = new MediaStar();
-            _context.Medias.Add(media);
+            //MediaDirector mediaDirector = new MediaDirector();
+            //MediaStar mediaStar = new MediaStar();
+            _context.Medias.Add(model);
             _context.SaveChanges();
 
-            foreach(short catId in catIds)
-            {
-                MediaCategory mediaCategory = new MediaCategory();
+            //foreach(short catId in catIds)
+            //{
+            //    MediaCategory mediaCategory = new MediaCategory();
 
-                mediaCategory.CategoryId = catId;
-                mediaCategory.MediaId = media.Id;
-                _context.MediaCategories.Add(mediaCategory);
+            //    mediaCategory.CategoryId = catId;
+            //    mediaCategory.MediaId = media.Id;
+            //    _context.MediaCategories.Add(mediaCategory);
 
-            }
+            //}
 
-            mediaDirector.DirectorId =dirId;
-            mediaDirector.MediaId = media.Id;
-
-
-            mediaStar.StarId = starId;
-            mediaStar.MediaId = media.Id;
+            //mediaDirector.DirectorId =dirId;
+            //mediaDirector.MediaId = media.Id;
 
 
-            _context.MediaDirectors.Add(mediaDirector);
-            _context.MediaStars.Add(mediaStar);
+            //mediaStar.StarId = starId;
+            //mediaStar.MediaId = media.Id;
+
+
+            //_context.MediaDirectors.Add(mediaDirector);
+            //_context.MediaStars.Add(mediaStar);
             _context.SaveChanges();
 
             return Ok();
